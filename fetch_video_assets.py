@@ -3,6 +3,16 @@ import re
 import requests
 from urllib.parse import urljoin, urlparse
 
+#
+# If you need a single video file, or a file per format, after this script
+#  ffmpeg -i file.m3u8 -c copy TS_concat.mkv (or mp4, or ..), and/or use VLC
+# 
+# Or, skip this script (the download) and:
+#  (alt) ffmpeg -i "http://www.website.com/file.m3u8" -c copy TS_concat.mkv (or mp4, or..)
+#
+# However, possible you'll need the header/cookie values. So, do that..
+#
+
 def extract_headers(curl_command):
     """
     Extract headers from a given cURL string.
@@ -140,7 +150,8 @@ def fetch_and_save_m3u8_and_ts(curl_command, save_directory='downloads'):
             
             # Save the .m3u8 file locally
             m3u8_filename = get_filename_from_url(m3u8_url)
-            m3u8_save_path = os.path.join(save_directory, 'm3u8', m3u8_filename)
+            # Replace '' w/ subdir if you want m3u8 files in a separate location
+            m3u8_save_path = os.path.join(save_directory, '', m3u8_filename)
             os.makedirs(os.path.dirname(m3u8_save_path), exist_ok=True)
             with open(m3u8_save_path, 'w') as f:
                 f.write(content)
@@ -161,13 +172,14 @@ def fetch_and_save_m3u8_and_ts(curl_command, save_directory='downloads'):
     for ts_url in ts_files:
         try:
             ts_filename = get_filename_from_url(ts_url)
-            ts_save_path = os.path.join(save_directory, 'ts', ts_filename)
+            # Replace '' w/ subdir if you want ts files in a separate location
+            ts_save_path = os.path.join(save_directory, '', ts_filename) 
             download_file(ts_url, headers, ts_save_path)
         except Exception as e:
             print(f"Error downloading {ts_url}: {str(e)}")
 
 # Example cURL string (with an .m3u8 URL and a query string)
-curl_string = ''' [[replace]]  '''
+curl_string = ''' [[replace]] '''
 
-# Fetch and save all .m3u8 and .ts files - needs better error-handling, and switch curl_string to parameter
+# Fetch and save all .m3u8 and .ts files
 fetch_and_save_m3u8_and_ts(curl_string)
