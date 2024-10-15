@@ -5,12 +5,12 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 from dotenv import load_dotenv
 
-def upload_directory_to_s3(source_directory, bucket_name, aws_access_key_id=None, aws_secret_access_key=None):
-    """
-    Should probably break this up from the blob it has become
-    Todo: add support for prefix in s3 bucket/path.
-    """
+#
+# Should probably break this up from the blobby thing it has become
+# Todo: add support for prefix in s3 bucket/path.
+#
 
+def upload_directory_to_s3(source_directory, bucket_name, aws_access_key_id=None, aws_secret_access_key=None):
     # Load environment variables from .env file
     load_dotenv()
 
