@@ -179,8 +179,14 @@ def fetch_and_save_m3u8_and_ts(curl_command, save_directory='downloads'):
         except Exception as e:
             print(f"Error downloading {ts_url}: {str(e)}")
 
-# Example cURL string (with an .m3u8 URL and a query string)
-curl_string = ''' [[replace]] '''
+def main():
 
-# Fetch and save all .m3u8 and .ts files
-fetch_and_save_m3u8_and_ts(curl_string)
+    # Example cURL string (with an .m3u8 URL and a query string)
+    # curl_string = ''' [[replace]] '''
+    curl_str = input("Enter the cURL string, to the master m3u8: ")
+
+    # Fetch and save all .m3u8 and .ts files
+    fetch_and_save_m3u8_and_ts(curl_string)
+
+if __name__ == '__main__':
+    main()
